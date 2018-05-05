@@ -23,6 +23,12 @@ class QuickSort
 
   # In-place.
   def self.sort2!(array, start = 0, length = array.length, &prc)
+    return array if length <= 1
+    prc ||= Proc.new{ |a,b| a <=> b }
+    pivot_idx = QuickSort.partition(array, start, length, &prc)
+
+    QuickSort.sort2!(array, 0, pivot_idx, &prc)
+    QuickSort.sort2!(array, pivot_idx + 1, length - pivot_idx - 1, &prc)
   end
 
   def self.partition(array, start, length, &prc)
