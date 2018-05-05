@@ -6,6 +6,19 @@ class QuickSort
 
   # Not in-place. Uses O(n) memory.
   def self.sort1(array)
+    return array if array.length <= 1
+    left = []
+    right = []
+    pivot = array[0]
+    array[1..-1].each do | el |
+      if el <= pivot
+        left.push(el)
+      else
+        right.push(el)
+      end
+    end
+
+    return self.sort1(left) + [pivot] + self.sort1(right)
   end
 
   # In-place.
