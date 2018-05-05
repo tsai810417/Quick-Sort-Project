@@ -26,5 +26,23 @@ class QuickSort
   end
 
   def self.partition(array, start, length, &prc)
+    prc ||= Proc.new{ |a,b| a <=> b }
+    # if a > b => 1, if a < b => -1
+    pivot_idx = start
+    current_idx = start
+    while current_idx < start + length
+      if prc.call(array[current_idx], array[start]) == -1
+        if pivot_idx + 1 != current_idx
+          array[current_idx], array[pivot_idx + 1] = array[pivot_idx + 1], array[current_idx]
+        end
+        pivot_idx += 1
+      end
+      current_idx += 1
+
+    end
+    array[start], array[pivot_idx] = array[pivot_idx], array[start]
+
+
+    pivot_idx
   end
 end
